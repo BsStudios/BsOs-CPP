@@ -1,0 +1,20 @@
+image: blackstonegm/buildtools:latest
+
+stages:
+  - build
+
+build:
+  stage: build
+  artifacts:
+    paths:
+      - "/builds/bs-studios/bsos-cpp/img/*"
+  script:
+    - cd kernel
+    - make setup
+    - cd ../gnu-efi
+    - make bootloader
+    - cd ../kernel
+    - make kernel
+    - make buildimg
+    - mkdir /builds/bs-studios/bsos-cpp/img
+    - cp /builds/bs-studios/bsos-cpp/kernel/bin/bsOs.img /builds/bs-studios/bsos-cpp/img/bsOs.img
