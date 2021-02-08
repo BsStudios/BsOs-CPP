@@ -18,8 +18,9 @@ build:
     - make buildimg
     - mkdir /builds/bs-studios/bsos-cpp/build
     - mkdir /builds/bs-studios/bsos-cpp/build/kernel
+    - mkdir /builds/bs-studios/bsos-cpp/build/kernel/bin
     - mkdir /builds/bs-studios/bsos-cpp/build/OVMFbin
-    - cp /builds/bs-studios/bsos-cpp/kernel/bin/bsOs.img /builds/bs-studios/bsos-cpp/build/kernel/bsOs.img
+    - cp /builds/bs-studios/bsos-cpp/kernel/bin/bsOs.img /builds/bs-studios/bsos-cpp/build/kernel/bin/bsOs.img
     - cp /builds/bs-studios/bsos-cpp/kernel/run.bat /builds/bs-studios/bsos-cpp/build/kernel/run.bat
     - cp /builds/bs-studios/bsos-cpp/OVMFbin/OVMF_CODE-pure-efi.fd /builds/bs-studios/bsos-cpp/build/OVMFbin/OVMF_CODE-pure-efi.fd
     - cp /builds/bs-studios/bsos-cpp/OVMFbin/OVMF_VARS-pure-efi.fd /builds/bs-studios/bsos-cpp/build/OVMFbin/OVMF_VARS-pure-efi.fd
