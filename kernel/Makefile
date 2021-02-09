@@ -1,4 +1,3 @@
-
 OSNAME = bsOs
 
 GNUEFI = ../gnu-efi
@@ -24,12 +23,12 @@ DIRS = $(wildcard $(SRCDIR)/*)
 kernel: $(OBJS) link
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
-	@echo !==== COMPILING $^
-	@mkdir -p $(@D)
+	@ echo !==== COMPILING $^
+	@ mkdir -p $(@D)
 	$(CC) $(CFLAGS) -c $^ -o $@
-
+	
 link:
-	@echo !==== LINKING
+	@ echo !==== LINKING
 	$(LD) $(LDFLAGS) -o $(BUILDDIR)/kernel.elf $(OBJS)
 
 setup:
@@ -44,6 +43,7 @@ buildimg:
 	mcopy -i $(BUILDDIR)/$(OSNAME).img $(BOOTEFI) ::/EFI/BOOT
 	mcopy -i $(BUILDDIR)/$(OSNAME).img startup.nsh ::
 	mcopy -i $(BUILDDIR)/$(OSNAME).img $(BUILDDIR)/kernel.elf ::
+	mcopy -i $(BUILDDIR)/$(OSNAME).img $(BUILDDIR)/../zap-light16.psf ::
 
 run:
 	qemu-system-x86_64 -drive file=$(BUILDDIR)/$(OSNAME).img -m 256M -cpu qemu64 -drive if=pflash,format=raw,unit=0,file="$(OVMFDIR)/OVMF_CODE-pure-efi.fd",readonly=on -drive if=pflash,format=raw,unit=1,file="$(OVMFDIR)/OVMF_VARS-pure-efi.fd" -net none
