@@ -49,7 +49,7 @@ void basicGraphicsDriver::Canvas::drawRectangle(math::Point p1, math::Point p2, 
 
     for (unsigned long y = p1.Y; y < p2.Y; y++){
         for (unsigned long x = p1.X; x < p2.X; x++){
-            drawPixel(math:Point(x, y), Colour);
+            drawPixel(math::Point(x, y), Colour);
         }
     }
 }
@@ -62,7 +62,7 @@ void basicGraphicsDriver::Canvas::drawPixel(math::Point p1, unsigned int Colour)
 void basicGraphicsDriver::Canvas::clear(unsigned int Colour){
     for (unsigned long y = 0; y < TargetFramebuffer->Height; y++){
         for (unsigned long x = 0; x < TargetFramebuffer->Width; x++){
-            drawPixel(math:Point(x, y), Colour);
+            drawPixel(math::Point(x, y), Colour);
         }
     }
 }
