@@ -54,8 +54,8 @@ extern "C" void _start(BootInfo* bootInfo){
     basicGraphicsDriver::Canvas canvas = basicGraphicsDriver::Canvas(bootInfo->framebuffer, bootInfo->psf1_Font);
 
     canvas.clear(0x00000000);
-    for (unsigned long y = 0; y < 32; y++){
-        for (unsigned long x = 0; x < 32; x++){
+    for (unsigned long x = 0; x < 32; x++){
+        for (unsigned long y = 0; y < 32; y++){
             if(cursor[x][y] == 1){
                 continue;
             }
