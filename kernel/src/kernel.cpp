@@ -56,11 +56,11 @@ extern "C" void _start(BootInfo* bootInfo){
     canvas.clear(0x00000000);
     for (unsigned long x = 0; x < 32; x++){
         for (unsigned long y = 0; y < 32; y++){
-            if(cursor[y][x] == 1){
+            if(cursor[x][y] == 1){
                 continue;
             }
             else {
-                canvas.drawPixel(math::Point(y,x), 0xffffffff);
+                canvas.drawPixel(math::Point(x,y), 0xffffffff);
             }
         }
     }
