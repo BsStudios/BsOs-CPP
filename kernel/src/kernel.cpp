@@ -49,7 +49,7 @@ extern "C" void _start(BootInfo* bootInfo){
         1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,
         1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,
         1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1
-    }
+    };
 
     basicGraphicsDriver::Canvas canvas = basicGraphicsDriver::Canvas(bootInfo->framebuffer, bootInfo->psf1_Font);
 
