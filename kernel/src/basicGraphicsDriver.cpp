@@ -45,12 +45,24 @@ void basicGraphicsDriver::Canvas::PutChar(char chr, unsigned int xOff, unsigned 
     }
 }
 
-void basicGraphicsDriver::Canvas::Draw(math::Point p1, math::Point p2, unsigned int Colour){
+void basicGraphicsDriver::Canvas::drawRectangle(math::Point p1, math::Point p2, unsigned int Colour){
 
-    unsigned int* pixPtr = (unsigned int*)TargetFramebuffer->BaseAddress;
     for (unsigned long y = p1.Y; y < p2.Y; y++){
         for (unsigned long x = p1.X; x < p2.X; x++){
-            *(unsigned int*)(pixPtr + x + (y * TargetFramebuffer->PixelsPerScanLine)) = Colour;
+            drawPixel(math:Point(x, y), Colour);
+        }
+    }
+}
+
+void basicGraphicsDriver::Canvas::drawPixel(math::Point p1, unsigned int Colour){
+    unsigned int* pixPtr = (unsigned int*)TargetFramebuffer->BaseAddress;
+    *(unsigned int*)(pixPtr + p1.X + (p1.Y * TargetFramebuffer->PixelsPerScanLine)) = Colour;
+}
+
+void basicGraphicsDriver::Canvas::clear(unsigned int Colour){
+    for (unsigned long y = 0; y < TargetFramebuffer->Height; y++){
+        for (unsigned long x = 0; x < TargetFramebuffer->Width; x++){
+            drawPixel(math:Point(x, y), Colour);
         }
     }
 }
