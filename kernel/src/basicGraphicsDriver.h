@@ -13,7 +13,9 @@ class basicGraphicsDriver{
         unsigned int Colour;
         void WriteString(const char* str, math::Point position);
         void PutChar(char chr, unsigned int xOff, unsigned int yOff);
-        void Draw(math::Point p1, math::Point p2, unsigned int Colour);
+        void drawRectangle(math::Point p1, math::Point p2, unsigned int Colour);
+        void drawPixel(math::Point p1, unsigned int Colour);
+        void clear(unsigned int Colour);
     };
     class Console{
         public:

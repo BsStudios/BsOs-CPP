@@ -16,18 +16,21 @@ struct BootInfo {
 
 extern "C" void _start(BootInfo* bootInfo){
 
-    basicGraphicsDriver::Console canvas = basicGraphicsDriver::Console(bootInfo->framebuffer, bootInfo->psf1_Font); 
+    basicGraphicsDriver::Canvas canvas = basicGraphicsDriver::Canvas(bootInfo->framebuffer, bootInfo->psf1_Font);
+
+
+    basicGraphicsDriver::Console console = basicGraphicsDriver::Console(bootInfo->framebuffer, bootInfo->psf1_Font); 
 
     uint64_t mMapEntries = bootInfo->mMapSize / bootInfo->mMapDescSize;
 
     for (int i = 0; i < mMapEntries; i++){
         EFI_MEMORY_DESCRIPTOR* desc = (EFI_MEMORY_DESCRIPTOR*)((uint64_t)bootInfo->mMap + (i * bootInfo->mMapDescSize));
-        canvas.Print(EFI_MEMORY_TYPE_STRINGS[desc->type]);
-        canvas.Colour = 0xffff00ff;
-        canvas.Print(" ");
-        canvas.Print(to_string(desc->numPages * 4096 / 1024));
-        canvas.Print(" KB\r\n");
-        canvas.Colour = 0xffffffff;
+        console.Print(EFI_MEMORY_TYPE_STRINGS[desc->type]);
+        console.Colour = 0xffff00ff;
+        console.Print(" ");
+        console.Print(to_string(desc->numPages * 4096 / 1024));
+        console.Print(" KB\r\n");
+        console.Colour = 0xffffffff;
     }
 
     // 
