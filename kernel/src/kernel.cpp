@@ -60,35 +60,24 @@ extern "C" void _start(BootInfo* bootInfo){
 
     //canvas.Print(to_string(*test));
 
-    
-    uint64_t mMapEntries = bootInfo->mMapSize / bootInfo->mMapDescSize;
-
-    PageFrameAllocator newAllocator;
-    newAllocator.ReadEFIMemoryMap(bootInfo->mMap, bootInfo->mMapSize, bootInfo->mMapDescSize);
-
-    uint64_t kernelSize = (uint64_t)&_KernelEnd - (uint64_t)&_KernelStart;
-    uint64_t kernelPages = (uint64_t)kernelSize / 4096 + 1;
-
-    newAllocator.LockPages(&_KernelStart, kernelPages);
-
     canvas.CursorPosition = {0, canvas.CursorPosition.Y + 16};
     canvas.Print("Free RAM: ");
-    canvas.Print(to_string(newAllocator.GetFreeRAM() / 1024));
+    canvas.Print(to_string(GlobalAllocator.GetFreeRAM() / 1024));
     canvas.Print(" KB ");
     canvas.CursorPosition = {0, canvas.CursorPosition.Y + 16};
 
     canvas.Print("Used RAM: ");
-    canvas.Print(to_string(newAllocator.GetUsedRAM() / 1024));
+    canvas.Print(to_string(GlobalAllocator.GetUsedRAM() / 1024));
     canvas.Print(" KB ");
     canvas.CursorPosition = {0, canvas.CursorPosition.Y + 16};
 
     canvas.Print("Reserved RAM: ");
-    canvas.Print(to_string(newAllocator.GetReservedRAM() / 1024));
+    canvas.Print(to_string(GlobalAllocator.GetReservedRAM() / 1024));
     canvas.Print(" KB ");
     canvas.CursorPosition = {0, canvas.CursorPosition.Y + 16};
 
     for (int t = 0; t < 20; t++){
-        void* address = newAllocator.RequestPage();
+        void* address = GlobalAllocator.RequestPage();
         canvas.Print(to_hstring((uint64_t)address));
         canvas.CursorPosition = {0, canvas.CursorPosition.Y + 16};
     }
