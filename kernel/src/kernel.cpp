@@ -82,7 +82,7 @@ extern "C" void _start(BootInfo* bootInfo){
         canvas.CursorPosition = {0, canvas.CursorPosition.Y + 16};
     }
 
-    While(true){
+    while(true){
         
     }
 
