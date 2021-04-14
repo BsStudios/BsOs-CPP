@@ -14,18 +14,18 @@ extern "C" void _start(BootInfo* bootInfo){
 
     canvas.CursorPosition = {0, canvas.CursorPosition.Y + 16};
     canvas.Print("Free RAM: ");
-    canvas.Print(to_string(GlobalAllocator.GetFreeRAM() / 1024));
-    canvas.Print(" KB ");
+    canvas.Print(to_string(GlobalAllocator.GetFreeRAM() / 1048576));
+    canvas.Print(" MB ");
     canvas.CursorPosition = {0, canvas.CursorPosition.Y + 16};
 
     canvas.Print("Used RAM: ");
-    canvas.Print(to_string(GlobalAllocator.GetUsedRAM() / 1024));
-    canvas.Print(" KB ");
+    canvas.Print(to_string(GlobalAllocator.GetUsedRAM() / 1048576));
+    canvas.Print(" MB ");
     canvas.CursorPosition = {0, canvas.CursorPosition.Y + 16};
 
     canvas.Print("Reserved RAM: ");
-    canvas.Print(to_string(GlobalAllocator.GetReservedRAM() / 1024));
-    canvas.Print(" KB ");
+    canvas.Print(to_string(GlobalAllocator.GetReservedRAM() / 1048576));
+    canvas.Print(" MB ");
     canvas.CursorPosition = {0, canvas.CursorPosition.Y + 16};
 
     for (int t = 0; t < 20; t++){
