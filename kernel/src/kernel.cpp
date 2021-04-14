@@ -82,8 +82,9 @@ extern "C" void _start(BootInfo* bootInfo){
         canvas.CursorPosition = {0, canvas.CursorPosition.Y + 16};
     }
 
-
-
+    While(true){
+        
+    }
 
 
     // basicGraphicsDriver::Console canvas = basicGraphicsDriver::Console(bootInfo->framebuffer, bootInfo->psf1_Font); 
