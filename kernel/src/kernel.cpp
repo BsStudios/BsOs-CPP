@@ -3,7 +3,10 @@
 
 extern "C" void _start(BootInfo* bootInfo){
 
-    basicGraphicsDriver::Console canvas = basicGraphicsDriver::Console(bootInfo->framebuffer, bootInfo->psf1_Font); 
+    basicGraphicsDriver::Canvas canvas = basicGraphicsDriver::Canvas(bootInfo->framebuffer, bootInfo->psf1_Font);
+
+
+    basicGraphicsDriver::Console console = basicGraphicsDriver::Console(bootInfo->framebuffer, bootInfo->psf1_Font); 
 
     KernelInfo kernelInfo = InitializeKernel(bootInfo);
     PageTableManager* pageTableManager = kernelInfo.pageTableManager;
