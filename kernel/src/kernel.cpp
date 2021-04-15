@@ -35,6 +35,4 @@ extern "C" void _start(BootInfo* bootInfo){
     }
 
     while(true);
-
-    return ;
 }
