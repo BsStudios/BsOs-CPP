@@ -128,6 +128,7 @@ typedef struct {
 
 EFI_STATUS efi_main (EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE *SystemTable) {
 	InitializeLib(ImageHandle, SystemTable);
+	Print(L"String blah blah blah \n\r");
 
 	EFI_FILE* Kernel = LoadFile(NULL, L"kernel.elf", ImageHandle, SystemTable);
 	if (Kernel == NULL){
@@ -195,6 +196,7 @@ EFI_STATUS efi_main (EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE *SystemTable) {
 	}
 
 	Print(L"Kernel Loaded\n\r");
+	
 
 	PSF1_FONT* newFont = LoadPSF1Font(NULL, L"zap-light16.psf", ImageHandle, SystemTable);
 	if (newFont == NULL){

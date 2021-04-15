@@ -1,44 +1,41 @@
 #include <stdint.h>
-#include "efiMemory.h"
-#include "basicGraphicsDriver.h"
-#include "cstr.h"
-#include "math.h"
-
-
-struct BootInfo {
-	Framebuffer* framebuffer;
-	PSF1_FONT* psf1_Font;
-	void* mMap;
-	uint64_t mMapSize;
-	uint64_t mMapDescSize;
-} ;
-
+#include "kernelUtil.h"
 
 extern "C" void _start(BootInfo* bootInfo){
 
-    basicGraphicsDriver::Canvas canvas = basicGraphicsDriver::Canvas(bootInfo->framebuffer, bootInfo->psf1_Font);
 
+    basicGraphicsDriver::Console canvas = basicGraphicsDriver::Console(bootInfo->framebuffer, bootInfo->psf1_Font); 
 
-    basicGraphicsDriver::Console console = basicGraphicsDriver::Console(bootInfo->framebuffer, bootInfo->psf1_Font); 
+    KernelInfo kernelInfo = InitializeKernel(bootInfo);
+    PageTableManager* pageTableManager = kernelInfo.pageTableManager;
 
-    uint64_t mMapEntries = bootInfo->mMapSize / bootInfo->mMapDescSize;
+    canvas.CursorPosition = {0, 0};
+    canvas.Print("BsOs  Version Alpha 10");
+    canvas.CursorPosition = {0, 32};
 
-    for (int i = 0; i < mMapEntries; i++){
-        EFI_MEMORY_DESCRIPTOR* desc = (EFI_MEMORY_DESCRIPTOR*)((uint64_t)bootInfo->mMap + (i * bootInfo->mMapDescSize));
-        console.Print(EFI_MEMORY_TYPE_STRINGS[desc->type]);
-        console.Colour = 0xffff00ff;
-        console.Print(" ");
-        console.Print(to_string(desc->numPages * 4096 / 1024));
-        console.Print(" KB\r\n");
-        console.Colour = 0xffffffff;
+    canvas.CursorPosition = {0, canvas.CursorPosition.Y + 16};
+    canvas.Print("Free RAM: ");
+    canvas.Print(to_string(GlobalAllocator.GetFreeRAM() / 1024));
+    canvas.Print(" KB ");
+    canvas.CursorPosition = {0, canvas.CursorPosition.Y + 16};
+
+    canvas.Print("Used RAM: ");
+    canvas.Print(to_string(GlobalAllocator.GetUsedRAM() / 1024));
+    canvas.Print(" KB ");
+    canvas.CursorPosition = {0, canvas.CursorPosition.Y + 16};
+
+    canvas.Print("Reserved RAM: ");
+    canvas.Print(to_string(GlobalAllocator.GetReservedRAM() / 1024));
+    canvas.Print(" KB ");
+    canvas.CursorPosition = {0, canvas.CursorPosition.Y + 16};
+
+    for (int t = 0; t < 20; t++){
+        void* address = GlobalAllocator.RequestPage();
+        canvas.Print(to_hstring((uint64_t)address));
+        canvas.CursorPosition = {0, canvas.CursorPosition.Y + 16};
     }
 
-    // 
-    // canvas.WriteString("HELLO WORLD", math::Point(1600, 500));
-    // canvas.WriteString("HELLO \r WORLD", math::Point(1600, 550));
-    // canvas.WriteString("HELLO \n WORLD", math::Point(1600, 600));
-    // canvas.WriteString("HELLO \r\n WORLD", math::Point(1600, 650));
-    // canvas.Draw(math::Point(100, 100), math::Point(110, 200), 0xffffffff);
-    // canvas.Draw(math::Point(100, 100), math::Point(200, 110), 0xffffffff);
+    while(true);
+
     return ;
 }
