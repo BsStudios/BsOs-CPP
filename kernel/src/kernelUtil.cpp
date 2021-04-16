@@ -1,5 +1,7 @@
 #include "kernelUtil.h"
 #include "gdt/gdt.h"
+#include "interrupts/IDT.h"
+#include "interrupts/interrupts.h"
 
 KernelInfo kernelInfo;
 PageTableManager pageTableManager = NULL;
@@ -35,6 +37,18 @@ void PrepareMemory(BootInfo* bootInfo){
     kernelInfo.pageTableManager = &pageTableManager;
 }
 
+IDTR idtr;
+void PrepareInterrupts(){
+    idtr.Limit = 0x0FFF;
+    idtr.Offset = (uint64_t)GlobalAllocator.RequestPage();
+
+    IDTDescEntry* int_PageFault = (IDTDescEntry*)(idtr.Offset + 0xE * sizeof(IDTDescEntry));
+    int_PageFault->SetOffset((uint64_t)PageFault_Handler);
+    int_PageFault->type_attr = IDT_TA_InterruptGate;
+    int_PageFault->selector = 0x08;
+
+    asm ("lidt %0" : : "m" (idtr));
+}
 
 KernelInfo InitializeKernel(BootInfo* bootInfo){
  
@@ -46,6 +60,8 @@ KernelInfo InitializeKernel(BootInfo* bootInfo){
     PrepareMemory(bootInfo);
 
     memset(bootInfo->framebuffer->BaseAddress, 0, bootInfo->framebuffer->BufferSize);
+
+    PrepareInterrupts();
 
     return kernelInfo;
 }
