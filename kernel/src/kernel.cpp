@@ -22,7 +22,7 @@ extern "C" void _start(BootInfo* bootInfo){
     globalConsole->Print("Used RAM: ");
     globalConsole->Print(to_string(GlobalAllocator.GetUsedRAM() / 1048576));
     globalConsole->Print(" MB ");
-    globalConsole.CursorPosition = {0, globalConsole->CursorPosition.Y + 16};
+    globalConsole->CursorPosition = {0, globalConsole->CursorPosition.Y + 16};
 
     globalConsole->Print("Reserved RAM: ");
     globalConsole->Print(to_string(GlobalAllocator.GetReservedRAM() / 1048576));
