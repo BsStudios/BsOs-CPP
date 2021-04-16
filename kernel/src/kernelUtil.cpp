@@ -5,6 +5,8 @@
 
 KernelInfo kernelInfo;
 PageTableManager pageTableManager = NULL;
+basicGraphicsDriver::Console* globalConsole;
+
 void PrepareMemory(BootInfo* bootInfo){
     uint64_t mMapEntries = bootInfo->mMapSize / bootInfo->mMapDescSize;
 
