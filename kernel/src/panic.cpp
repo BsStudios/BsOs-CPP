@@ -2,16 +2,16 @@
 #include "kernelUtil.h"
 
 void Panic(const char* panicMessage){
-    GlobalRenderer->Clear(0x00ff0000);
+    globalConsole->Clear(0x00ff0000);
 
-    GlobalRenderer->CursorPosition = {0, 0};
+    globalConsole->CursorPosition = {0, 0};
 
-    GlobalRenderer->Colour = 0;
+    globalConsole->Colour = 0;
 
-    GlobalRenderer->Print("Kernel Panic");
+    globalConsole->Print("Kernel Panic");
 
-    GlobalRenderer->Next();
-    GlobalRenderer->Next();
+    globalConsole->Next();
+    globalConsole->Next();
 
-    GlobalRenderer->Print(panicMessage);
+    globalConsole->Print(panicMessage);
 }
