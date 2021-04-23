@@ -2,6 +2,7 @@
 #include "math.h"
 #include "frameBuffer.h"
 #include "simpleFonts.h"
+#include <stdint.h>
 
 class basicGraphicsDriver{
     public:
