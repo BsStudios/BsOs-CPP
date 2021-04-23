@@ -59,14 +59,6 @@ void basicGraphicsDriver::Canvas::drawPixel(math::Point p1, unsigned int Colour)
     *(unsigned int*)(pixPtr + p1.X + (p1.Y * TargetFramebuffer->PixelsPerScanLine)) = Colour;
 }
 
-void basicGraphicsDriver::Canvas::clear(unsigned int Colour){
-    for (unsigned long y = 0; y < TargetFramebuffer->Height; y++){
-        for (unsigned long x = 0; x < TargetFramebuffer->Width; x++){
-            drawPixel(math::Point(x, y), Colour);
-        }
-    }
-}
-
 void basicGraphicsDriver::Canvas::Clear(unsigned int colour){
     uint64_t fbBase = (uint64_t)TargetFramebuffer->BaseAddress;
     uint64_t bytesPerScanline = TargetFramebuffer->PixelsPerScanLine * 4;
