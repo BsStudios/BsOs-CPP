@@ -12,7 +12,7 @@ class math{
             this->X = x;
             this->Y = y;
         };
-        unsigned int X;
-        unsigned int Y;
+        long X;
+        long Y;
     };
 };
