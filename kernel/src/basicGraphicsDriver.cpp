@@ -143,7 +143,7 @@ void basicGraphicsDriver::Console::Clear(uint32_t colour){
     }
 }
 
-void BasicRenderer::Console::Next(){
+void basicRenderer::Console::Next(){
     CursorPosition.X = 0;
     CursorPosition.Y += 16;
 }
