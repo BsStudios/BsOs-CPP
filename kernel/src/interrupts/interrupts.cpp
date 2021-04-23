@@ -18,7 +18,7 @@ __attribute__((interrupt)) void GPFault_Handler(struct interrupt_frame* frame){
 }
 
 __attribute__((interrupt)) void KeyboardInt_Handler(struct interrupt_frame* frame){
-    GlobalRenderer->Print("Pressed");
+    globalConsole->Print("Pressed");
     uint8_t scancode = inb(0x60);
     PIC_EndMaster();
 }
