@@ -2,6 +2,7 @@
 #include "math.h"
 #include "frameBuffer.h"
 #include "simpleFonts.h"
+#include <stdint.h>
 
 class basicGraphicsDriver{
     public:
@@ -15,7 +16,7 @@ class basicGraphicsDriver{
         void PutChar(char chr, unsigned int xOff, unsigned int yOff);
         void drawRectangle(math::Point p1, math::Point p2, unsigned int Colour);
         void drawPixel(math::Point p1, unsigned int Colour);
-        void clear(unsigned int Colour);
+        void Clear(unsigned int Colour);
     };
     class Console{
         public:
@@ -26,5 +27,7 @@ class basicGraphicsDriver{
         unsigned int Colour;
         void Print(const char* str);
         void PutChar(char chr, unsigned int xOff, unsigned int yOff);
+        void Clear(uint32_t colour);
+        void Next();
     };
 };

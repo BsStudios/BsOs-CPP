@@ -27,3 +27,5 @@ struct KernelInfo {
 };
 
 KernelInfo InitializeKernel(BootInfo* BootInfo);
+
+extern basicGraphicsDriver::Console* globalConsole;

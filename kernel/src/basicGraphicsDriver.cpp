@@ -59,15 +59,19 @@ void basicGraphicsDriver::Canvas::drawPixel(math::Point p1, unsigned int Colour)
     *(unsigned int*)(pixPtr + p1.X + (p1.Y * TargetFramebuffer->PixelsPerScanLine)) = Colour;
 }
 
-void basicGraphicsDriver::Canvas::clear(unsigned int Colour){
-    for (unsigned long y = 0; y < TargetFramebuffer->Height; y++){
-        for (unsigned long x = 0; x < TargetFramebuffer->Width; x++){
-            drawPixel(math::Point(x, y), Colour);
+void basicGraphicsDriver::Canvas::Clear(unsigned int colour){
+    uint64_t fbBase = (uint64_t)TargetFramebuffer->BaseAddress;
+    uint64_t bytesPerScanline = TargetFramebuffer->PixelsPerScanLine * 4;
+    uint64_t fbHeight = TargetFramebuffer->Height;
+    uint64_t fbSize = TargetFramebuffer->BufferSize;
+
+    for (int verticalScanline = 0; verticalScanline < fbHeight; verticalScanline ++){
+        uint64_t pixPtrBase = fbBase + (bytesPerScanline * verticalScanline);
+        for (uint32_t* pixPtr = (uint32_t*)pixPtrBase; pixPtr < (uint32_t*)(pixPtrBase + bytesPerScanline); pixPtr ++){
+            *pixPtr = colour;
         }
     }
 }
-
-
 
 
 
@@ -115,4 +119,23 @@ void basicGraphicsDriver::Console::PutChar(char chr, unsigned int xOff, unsigned
         }
         fontPtr++;
     }
+}
+
+void basicGraphicsDriver::Console::Clear(uint32_t colour){
+    uint64_t fbBase = (uint64_t)TargetFramebuffer->BaseAddress;
+    uint64_t bytesPerScanline = TargetFramebuffer->PixelsPerScanLine * 4;
+    uint64_t fbHeight = TargetFramebuffer->Height;
+    uint64_t fbSize = TargetFramebuffer->BufferSize;
+
+    for (int verticalScanline = 0; verticalScanline < fbHeight; verticalScanline ++){
+        uint64_t pixPtrBase = fbBase + (bytesPerScanline * verticalScanline);
+        for (uint32_t* pixPtr = (uint32_t*)pixPtrBase; pixPtr < (uint32_t*)(pixPtrBase + bytesPerScanline); pixPtr ++){
+            *pixPtr = colour;
+        }
+    }
+}
+
+void basicGraphicsDriver::Console::Next(){
+    CursorPosition.X = 0;
+    CursorPosition.Y += 16;
 }
